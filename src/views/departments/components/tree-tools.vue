@@ -20,9 +20,9 @@
           <el-dropdown @command="operateDepts">
             <span> 操作 &nbsp; <i class="el-icon-arrow-down" /> </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item commond="add">添加部门</el-dropdown-item>
+              <el-dropdown-item command="add">添加部门</el-dropdown-item>
               <el-dropdown-item v-if="!isRoot" command="edit">修改部门</el-dropdown-item>
-              <el-dropdown-item v-if="!isRoot" commond="del">删除部门</el-dropdown-item>
+              <el-dropdown-item v-if="!isRoot" command="del">删除部门</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-col>
@@ -44,19 +44,28 @@ export default {
       default: false
     }
   },
+  data() {
+    return {
+      isShowDialog: false
+    }
+  },
   methods: {
     operateDepts(type) {
       if (type === 'add') {
         // 添加部门
+        this.$emit('openDialog', this.treeNode)
       } else if (type === 'edit') {
+        this.$emit('editDialog', this.treeNode)
         // 修改部门
       } else {
         // 删除部门
         this.$confirm(`你确定要删除：${this.treeNode.name} 吗？`).then(() => {
           return delDepartments(this.treeNode.id)
         }).then(() => {
-          this.$emit('updateDept')
+          this.$emit('delDept')
           this.$message(`删除：${this.treeNode.name} 成功！`)
+        }).catch(() => {
+          this.$message('取消删除')
         })
       }
     }

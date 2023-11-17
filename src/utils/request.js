@@ -42,6 +42,9 @@ service.interceptors.response.use(
       location.reload()
     } else if (code === 401) {
       Message.error(msg)
+    } else if (code !== 0 || code !== 200) {
+      Message.error(msg)
+      return Promise.reject(msg)
     } else if (response.status === 200) {
       return response
     } else {
