@@ -35,18 +35,13 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use(
   response => {
     const { isSuccess, msg, data, code } = response.data
-    if (isSuccess) {
+    if (response.status === 200 && isSuccess === undefined) {
+      return response
+    } else if (isSuccess) {
       return data
     } else if (code === 40001) {
       store.dispatch('user/logout') // 登出action 删除token
       location.reload()
-    } else if (code === 401) {
-      Message.error(msg)
-    } else if (code !== 0 || code !== 200) {
-      Message.error(msg)
-      return Promise.reject(msg)
-    } else if (response.status === 200) {
-      return response
     } else {
       Message.error(msg)
       return Promise.reject(new Error(msg))
