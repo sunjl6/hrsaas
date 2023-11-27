@@ -56,3 +56,12 @@ export function editDepartment(data) {
     data
   })
 }
+
+// 不分页查询所有部门
+
+export function getAllDepts() {
+  return request({
+    url: '/authority/org/getAllOrgs', // 因为所有的接口都要跨域 表示所有的接口要带 /api
+    method: 'GET'
+  })
+}

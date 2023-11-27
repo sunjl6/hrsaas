@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
-
+import Component from '@/components'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/en' // lang i18n
@@ -28,7 +28,7 @@ import * as directives from '@/directives' // 导入自定义指令
 //   const { mockXHR } = require('../mock')
 //   mockXHR()
 // }
-
+Vue.use(Component)
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
