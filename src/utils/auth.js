@@ -3,7 +3,7 @@ import Cookies from 'js-cookie'
 const TokenKey = 'hrsaas-ihrm-token'
 const UserInfoKey = 'UserInfo'
 const timeKey = 'hrsaas-timestamp-key'
-
+const currentTab = 'currentTab'
 export function setTimeStamp() {
   return Cookies.set(timeKey, Date.now())
 }
@@ -35,4 +35,12 @@ export function getUserInfoFromCookie() {
   } catch (error) {
     return error
   }
+}
+
+// 缓存当前tab栏的激活页面
+export function setCurrentTab(value) {
+  return Cookies.set(currentTab, value)
+}
+export function getCurrentTab() {
+  return Cookies.get(currentTab)
 }

@@ -15,5 +15,23 @@ export default {
       // icon: 'el-icon-user'
       icon: 'people'
     }
-  }]
+  },
+  {
+    path: 'detail/:id',
+    component: () => import('@/views/employees/detail'),
+    hidden: true,
+    meta: {
+      titla: '员工详细'
+    }
+  },
+  {
+    path: 'print/:id', // 二级默认路由
+    component: () => import('@/views/employees/print'), // 按需加载
+    hidden: true,
+    meta: {
+      title: '打印', // 标记当前路由规则的中文名称 后续在做左侧菜单时 使用
+      icon: 'people'
+    }
+  }
+  ]
 }

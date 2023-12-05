@@ -22,6 +22,12 @@ service.interceptors.request.use(config => {
       location.reload() // 刷新页面
       return Promise.reject(new Error('token超时了')) // 返回一个promis 错误提示
     }
+    // 修改请求头信息
+    // if (config.type === 'change') {
+    //   config.headers['Content-Type'] = 'multipart/form-data'
+    // } else {
+    //   config.headers['Content-Type'] = 'application/json'
+    // }
     // 如果token存在 注入token
     config.headers['Authorization'] = `Bearer ${store.getters.token}`
     config.headers['token'] = store.getters.token

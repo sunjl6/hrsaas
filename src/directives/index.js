@@ -8,7 +8,7 @@ export const imageerror = {
   inserted(dom, options) {
     // inserted执行的之后 此时 并没有对 src赋值
     // 图片有地址 但是地址加载图片失败的时候 会执行一个函数  onerror
-    // dom.src = dom.src || options.value
+    dom.src = dom.src || options.value // 这里判断 dom里的src 如果是null 就给option.value 里的值给默认图片防止显示不除了
     dom.onerror = function() {
       // 监听onerror事件
       // options.value就是指令传过来的值

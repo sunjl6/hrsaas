@@ -33,11 +33,11 @@
           </el-table-column>
           <el-table-column label="操作" sortable="" fixed="right" width="230">
             <template slot-scope="scope">
-              <el-button type="text" size="small">查看</el-button>
+              <el-button type="text" size="small" @click="$router.push(`/employees/detail/${scope.row.id}`)">查看</el-button>
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="addRoleBtn(scope.row)">角色</el-button>
               <el-button type="text" size="small" @click="delUserBtn(scope.row)">删除</el-button>
             </template>
           </el-table-column>
@@ -49,6 +49,8 @@
       </el-card>
       <!-- 新增员工对话框 -->
       <addUser :is-open-add-dialog="isOpenAddDialog" :orgs="orgs" @cancelAddDialog="cancelAddDialog" />
+      <!-- 分配角色对话框 -->
+      <assign-role ref="roles" :show-role-dialog.sync="isOpenRoleDialog" :user-id="userId" @closeRoleDialog="closeRoleDialog" />
     </div>
   </div>
 </template>
@@ -59,12 +61,17 @@ import { getAllDepts } from '@/api/departments'
 import addUser from './components/add-employee.vue'
 import { formatDate } from '@/filter/index'
 import EmployeeEnum from '@/api/constants/employees'
+import assignRole from './components/assign-role.vue'
 export default {
   components: {
-    addUser
+    addUser,
+    assignRole
   },
   data() {
     return {
+      userId: '',
+      currentUser: {}, // 点击角色的时候获取的id 传递给分配角色组件，用于获取这个用户的角色
+      isOpenRoleDialog: false,
       orgs: [], // 所有部门的数据用于子组件select 选择
       loading: false,
       userList: [], // 表单数据
@@ -100,7 +107,17 @@ export default {
     this.getAllOrgs()
   },
   methods: {
-    // 转成excel 导出的格式需要对应表头等
+    // 子组件通知父组件关闭对话
+    closeRoleDialog(value) {
+      this.isOpenRoleDialog = false
+    },
+    // 点击分配角色按钮
+    async addRoleBtn(row) {
+      this.$refs.roles.getUserRoles(row.id)
+      this.userId = row.id
+      this.isOpenRoleDialog = true
+    },
+    // 转成excel 导出的格式需要对应表头一一对应
     formatJson(headers, rows) {
       // 首先遍历数组
       // [{ username: '张三'},{},{}]  => [[’张三'],[],[]]
