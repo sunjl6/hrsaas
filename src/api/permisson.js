@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 获取所有权限树
+// 获取菜单所有权限树
 export function menuList() {
   // 返回一个axios对象 => promise  // 返回了一个promise对象
   return request({
@@ -84,5 +84,30 @@ export function editResource(data) {
     url: '/authority/resource/', // 因为所有的接口都要跨域 表示所有的接口要带 /api
     method: 'PUT',
     data
+  })
+}
+// 获取角色所有权限 并且以数组里放id 的形式返回
+export function getMenuAndResourcesIdListByRoleId(roleId) {
+  // 返回一个axios对象 => promise  // 返回了一个promise对象
+  return request({
+    url: '/authority/role/authority/' + roleId, // 因为所有的接口都要跨域 表示所有的接口要带 /api
+    method: 'GET'
+  })
+}
+// 给角色配权限
+export function assignRolePermission(data) {
+  // 返回一个axios对象 => promise  // 返回了一个promise对象
+  return request({
+    url: '/authority/role/authority', // 因为所有的接口都要跨域 表示所有的接口要带 /api
+    method: 'POST',
+    data
+  })
+}
+// 获取登入用户拥有的路由菜单
+export function getUserRouters(data) {
+  // 返回一个axios对象 => promise  // 返回了一个promise对象
+  return request({
+    url: '/authority/menu/router', // 因为所有的接口都要跨域 表示所有的接口要带 /api
+    method: 'GET'
   })
 }

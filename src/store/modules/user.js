@@ -1,9 +1,12 @@
-import { getToken, setToken, removeToken, setUseInfoToCookie, removeUserInfoFromCookie, getUserInfoFromCookie, setTimeStamp } from '@/utils/auth'
+import { removeDynamicRouterFromStorage, removeUserPermissionFromLocalStorage, setUserPermissionToLocalStorage, removeUserRouterFromLocalStorage, setUserRouterToLocalStorage, getUserRouterFromLocalStorage, getToken, setToken, removeToken, setUseInfoToCookie, removeUserInfoFromCookie, getUserInfoFromCookie, setTimeStamp, getUserPermissionFromLocalStorage } from '@/utils/auth'
 import { login, getUserInfo } from '@/api/user'
+import { getUserRouters } from '@/api/permisson'
 // 状态
 const state = {
   token: getToken(),
-  userInfo: getUserInfoFromCookie()
+  userInfo: getUserInfoFromCookie(),
+  userRouters: getUserRouterFromLocalStorage(),
+  permission: getUserPermissionFromLocalStorage()
 }
 // 修改状态
 const mutations = {
@@ -26,6 +29,28 @@ const mutations = {
   removeUserInfo() {
     state.userInfo = {}
     removeUserInfoFromCookie()
+  },
+  // 设置当前用户的路由信息到localstorage
+  setUserRouters(state, routersData) {
+    state.userRouters = routersData
+    setUserRouterToLocalStorage(routersData)
+  },
+  // 登出删除本地存储用户的信息
+  removeUserRouters() {
+    state.userRouters = {}
+    removeUserRouterFromLocalStorage()
+  },
+  // 设置权限缓存本地存储
+  setUserPermission(state, permissionData) {
+    state.permission = permissionData
+    setUserPermissionToLocalStorage(permissionData)
+  },
+  // 登出删除本地存储权限缓存信息
+  removeUserPermission() {
+    removeUserPermissionFromLocalStorage()
+  },
+  removeDYNAMIC_ROUTES() {
+    removeDynamicRouterFromStorage()
   }
 }
 // 执行异步
@@ -41,18 +66,33 @@ const actions = {
     //   // 现在有用户token
     //   // actions 修改state 必须通过mutations
     context.commit('setToken', result.token.token)
-    // 把当前实际戳放进cookies里 用于token时效校验
+    // 发送请求获取当前用户的路由信息
+    const userRouters = await getUserRouters({ userId: result.user.id })
+    // 吧路由信息存到vuex 和 cookies 里
+    context.commit('setUserRouters', userRouters)
+    // 把用户的权限标识缓存到本地存储
+    context.commit('setUserPermission', result.permissionsList)
+    // 把当前时间戳放进cookies里 用于token时效校验
     setTimeStamp()
     // }
   },
+  // 获取用户信息
   async getUserInfo(context) {
     const result = await getUserInfo()
     context.commit('setUserInfo', result)
     return result
   },
+  // 给permission.js用的
+  async getUserRoutersById(userId) {
+    const result = await getUserRouters(userId)
+    return result
+  },
   logout(context) {
     context.commit('removeToken')
     context.commit('removeUserInfo')
+    context.commit('removeUserRouters')
+    context.commit('removeUserPermission')
+    context.commit('removeDYNAMIC_ROUTES')
   }
 }
 export default {

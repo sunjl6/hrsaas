@@ -142,3 +142,17 @@ export function randomNum(len, radix) {
   }
   return uuid.join('') + new Date().getTime()
 }
+export function getTreeIds(arr, key) {
+  const result = []
+  if (Array.isArray(arr)) {
+    return result
+  } else {
+    arr.forEach(item => {
+      result.push(item[key])
+      if (item.children) {
+        getTreeIds(item.children, key)
+      }
+    })
+    return result
+  }
+}

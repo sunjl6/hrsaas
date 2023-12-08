@@ -21,6 +21,7 @@
           :default-checked-keys="[resource.menuId]"
           :props="defaultProps"
           @check-change="handleCheckChange"
+          @check="currentClecked"
         />
       </el-form-item>
       <el-form-item label="请求方法" prop="method">
@@ -97,15 +98,18 @@ export default {
       this.resource = res
       this.loading = false
     },
+    // 当前树节点被选中的事件
+    currentClecked(data) {
+      this.resource.menuId = data.id
+    },
+    // 这个方法用于树结构能够单选
     handleCheckChange(data, checked) { // 子级只能单选
       if (checked) {
         // this.resource.menuId = data.id
         // this.resource.id = data.id
         this.$refs.tree.setCheckedKeys([data.id], true)
-        this.resource.menuId = data.id
       } else {
-        // this.resource.id = null
-        this.resource.menuId = 0
+        this.resource.menuId = null
       }
     },
     // 关闭编辑api对话框方法

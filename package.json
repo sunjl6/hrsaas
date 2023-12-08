@@ -14,9 +14,10 @@
     "test:ci": "npm run lint && npm run test:unit"
   },
   "dependencies": {
+    "array": "^0.4.3",
     "axios": "0.18.1",
     "big.js": "^6.2.1",
-    "core-js": "3.6.5",
+    "core-js": "^3.33.3",
     "element-ui": "2.13.2",
     "file-saver": "^2.0.5",
     "js-cookie": "2.2.0",

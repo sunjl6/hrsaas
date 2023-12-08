@@ -71,9 +71,10 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column label="操作" width="160" align="center">
+              <el-table-column label="操作" width="200" align="center">
                 <template slot-scope="scope">
-                  <el-button type="success" icon="el-icon-user" circle />
+                  <el-button type="info" icon="el-icon-thumb" circle @click="addRoleResourcePermission(scope.row)" />
+                  <el-button type="success" icon="el-icon-user" circle @click="editRolePermission(scope.row)" />
                   <el-button
                     type="primary"
                     icon="el-icon-edit"
@@ -158,6 +159,10 @@
         @updateRoleDone="updateRoleDone"
       />
       <add-role :open-dialog="isOpenAddDialog" @closeAddRoleDialog="closeAddRoleDialog" @addRoleSuccess="addRoleSuccess" />
+      <!-- 给角色分配权限组件 -->
+      <addRolePermission v-if="menuTree" ref="assignRoleDialog" :role-id="roleId" :menu-tree="menuTree" :is-open-add-role-permission-dialog="isOpenAddRolePermissionDialog" @closeAddRolePermDialog="closeAddRolePermDialog" />
+      <!-- 给角色分配api权限组件 -->
+      <addResourcePermission ref="assignRoleResourceDialog" :role-id="roleId" :resource-tree="resourceTree" :is-open-add-resource-permission-dialog="isOpenAddResourcePermissionDialog" @closeResourceDialog="closeResourceDialog" />
     </div>
   </div>
 </template>
@@ -169,13 +174,24 @@ import {
 } from '@/api/setting'
 import editRole from './components/edit-role.vue'
 import addRole from './components/add-role.vue'
+import addRolePermission from './components/add-role-menuPerm.vue'
+import { menuList, pageResource } from '@/api/permisson'
+import addResourcePermission from './components/add-row-resourcePerm.vue'
 export default {
   components: {
     editRole,
-    addRole
+    addRole,
+    addRolePermission,
+    addResourcePermission
   },
   data() {
     return {
+      loading: false, // 控制loading 开关
+      roleId: '',
+      isOpenAddResourcePermissionDialog: false, // 控制打开角色分配api权限对话
+      resourceTree: [], // 获取100个权限给子组件分配权限
+      menuTree: [], // 菜单树传递给子组件展示
+      isOpenAddRolePermissionDialog: false, // 控制打开角色分配权限对话框
       tableData: [],
       companyData: {
         name: 'sunjl未来公司',
@@ -203,8 +219,46 @@ export default {
   },
   created() {
     this.getRoleList()
+    this.menuList()
+    this.pageResource()
   },
   methods: {
+    // 子组件通知父组件关闭分配api权限对话框
+    closeResourceDialog() {
+      this.isOpenAddResourcePermissionDialog = false
+    },
+    // 添加api权限按钮事件
+    addRoleResourcePermission(row) {
+      this.pageResource()
+      this.roleId = row.id
+      this.$refs.assignRoleResourceDialog.getResourceListIdsByRoleId(row.id)
+      this.isOpenAddResourcePermissionDialog = true
+    },
+    // 获取权限树结构
+    async pageResource() {
+      const res = await pageResource({
+        current: 1,
+        size: 100
+      })
+      this.resourceTree = res.records
+    },
+    // 获取菜单树结构
+    async menuList() {
+      const res = await menuList()
+      this.menuTree = res
+    },
+    // 子组件通知父组件关闭角色分配权限对话框
+    closeAddRolePermDialog() {
+      this.isOpenAddRolePermissionDialog = false
+    },
+    // 给角色分配菜单权限
+    editRolePermission(row) {
+      this.roleId = row.id
+      this.menuList()
+      // 调用子组件通过id 查询菜单获取结果并且渲染在tree里
+      this.$refs.assignRoleDialog.getMenuById(row.id)
+      this.isOpenAddRolePermissionDialog = true
+    },
     // 添加角色添加成功后通知父组件关闭对话
     addRoleSuccess() {
       this.isOpenAddDialog = false

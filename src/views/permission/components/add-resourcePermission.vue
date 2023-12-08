@@ -78,7 +78,7 @@ export default {
         'id': '',
         'code': '',
         'describe': '',
-        'menuId': 0,
+        'menuId': '',
         'method': '',
         'name': '',
         'url': ''
