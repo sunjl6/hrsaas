@@ -58,7 +58,7 @@ export function setUserPermissionToLocalStorage(permissionData) {
   return db.save(userPermission, permissionData)
 }
 // 从本地存储获取菜单权限标识
-export function getUserPermissionFromLocalStorage(permissionData) {
+export function getUserPermissionFromLocalStorage() {
   return db.get(userPermission)
 }
 // 从本地存储删除用户菜单权限表示由信息

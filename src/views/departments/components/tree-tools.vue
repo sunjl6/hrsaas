@@ -20,9 +20,9 @@
           <el-dropdown @command="operateDepts">
             <span> 操作 &nbsp; <i class="el-icon-arrow-down" /> </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="add">添加部门</el-dropdown-item>
-              <el-dropdown-item v-if="!isRoot" command="edit">修改部门</el-dropdown-item>
-              <el-dropdown-item v-if="!isRoot" command="del">删除部门</el-dropdown-item>
+              <el-dropdown-item command="add" :disabled="!checkPermission('org:add')">添加部门</el-dropdown-item>
+              <el-dropdown-item v-if="!isRoot" command="edit" :disabled="!checkPermission('org:update')">修改部门</el-dropdown-item>
+              <el-dropdown-item v-if="!isRoot" command="del" :disabled="!checkPermission('org:delete')">删除部门</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-col>
@@ -33,6 +33,7 @@
 
 <script>
 import { delDepartments } from '@/api/departments'
+import checkPermission from '@/mixin/checkPermission'
 export default {
   props: {
     treeNode: {

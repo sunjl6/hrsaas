@@ -1,6 +1,7 @@
 import { removeDynamicRouterFromStorage, removeUserPermissionFromLocalStorage, setUserPermissionToLocalStorage, removeUserRouterFromLocalStorage, setUserRouterToLocalStorage, getUserRouterFromLocalStorage, getToken, setToken, removeToken, setUseInfoToCookie, removeUserInfoFromCookie, getUserInfoFromCookie, setTimeStamp, getUserPermissionFromLocalStorage } from '@/utils/auth'
 import { login, getUserInfo } from '@/api/user'
 import { getUserRouters } from '@/api/permisson'
+import { resetRouter } from '@/router'
 // 状态
 const state = {
   token: getToken(),
@@ -93,6 +94,7 @@ const actions = {
     context.commit('removeUserRouters')
     context.commit('removeUserPermission')
     context.commit('removeDYNAMIC_ROUTES')
+    resetRouter()
   }
 }
 export default {

@@ -5,7 +5,7 @@ import Component from '@/components'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/en' // lang i18n
-
+import checkPermission from './mixin/checkPermission'
 import '@/styles/index.scss' // global css
 
 import App from './App'
@@ -30,6 +30,7 @@ import * as directives from '@/directives' // 导入自定义指令
 // }
 Vue.use(Component)
 // set ElementUI lang to EN
+Vue.mixin(checkPermission) // 添加注册全局混入方法
 Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
