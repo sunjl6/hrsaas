@@ -80,28 +80,28 @@ export const constantRoutes = [
       path: '', // 二级路由path什么都不写 表示二级默认路由
       component: () => import('@/views/import')
     }]
-  },
-  // 测试页面
-  {
-    path: '/test',
-    component: Layout,
-    name: '测试页面',
-    hidden: false,
-    children: [{
-      path: '/test',
-      name: 'test',
-      component: () => import('@/views/test1/index'),
-      meta: { title: '测试', icon: 'dashboard' }
-    },
-    {
-      path: '/test2',
-      name: 'test2',
-      component: () => import('@/views/test1/test2'),
-      meta: { title: '测试', icon: 'dashboard' }
-    }
-    ],
-    meta: { title: '测试页面', icon: 'dashboard' }
   }
+  // 测试页面
+  // {
+  //   path: '/test',
+  //   component: Layout,
+  //   name: '测试页面',
+  //   hidden: false,
+  //   children: [{
+  //     path: '/test',
+  //     name: 'test',
+  //     component: () => import('@/views/test1/index'),
+  //     meta: { title: '测试', icon: 'dashboard' }
+  //   },
+  //   {
+  //     path: '/test2',
+  //     name: 'test2',
+  //     component: () => import('@/views/test1/test2'),
+  //     meta: { title: '测试', icon: 'dashboard' }
+  //   }
+  //   ],
+  //   meta: { title: '测试页面', icon: 'dashboard' }
+  // }
   // 404 page must be placed at the end !!!
   // { path: '*', redirect: '/404', hidden: true }
 ]

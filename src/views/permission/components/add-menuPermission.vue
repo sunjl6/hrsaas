@@ -13,10 +13,10 @@
         <el-input v-model="menu.name" style="width: 80%" placeholder="对应页面菜单显示的名称" />
       </el-form-item>
       <el-form-item label="路径" prop="path">
-        <el-input v-model="menu.path" style="width: 80%" placeholder="对应路由里的菜单路径 例如：/xxx" />
+        <el-input v-model="menu.path" style="width: 80%" placeholder="对应路由里的菜单路径 例如：/activiti/deployment" />
       </el-form-item>
       <el-form-item label="组件" prop="component">
-        <el-input v-model="menu.component" style="width: 80%" placeholder="对应页面组件路径 例如：/xxx/index" />
+        <el-input v-model="menu.component" style="width: 80%" placeholder="对应页面组件路径 例如：setting/index" />
       </el-form-item>
       <el-form-item label="是否公开" prop="isPublice">
         <template>

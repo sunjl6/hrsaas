@@ -71,7 +71,7 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column label="操作" width="200" align="center">
+              <el-table-column label="操作" width="220" align="center">
                 <template slot-scope="scope">
                   <el-button type="info" icon="el-icon-thumb" circle @click="addRoleResourcePermission(scope.row)" />
                   <el-button type="success" icon="el-icon-user" circle @click="editRolePermission(scope.row)" />

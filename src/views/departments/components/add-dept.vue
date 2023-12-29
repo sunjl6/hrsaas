@@ -10,6 +10,9 @@
           disabled
         />
       </el-form-item>
+      <el-form-item label="所属上级部门">
+        <el-input v-model="supDeptName" style="width: 80%" disabled />
+      </el-form-item>
       <el-form-item label="部门名称" prop="name">
         <el-input v-model="formData.name" style="width: 80%" placeholder="1-50个字符" />
       </el-form-item>
@@ -66,6 +69,7 @@ export default {
       isExist ? callback(new Error(`组织架构中已存在:${value}`)) : callback()
     }
     return {
+      supDeptName: '',
       formData: {
         abbreviation: '', // 简称
         describe: '', // 部门描述
@@ -85,6 +89,7 @@ export default {
   watch: {
     treeNode(value) {
       this.formData.parentId = this.treeNode.id === undefined ? 0 : this.treeNode.id
+      this.supDeptName = this.treeNode.name === undefined ? '无' : this.treeNode.name
     }
   },
   created() {},

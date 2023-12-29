@@ -5,8 +5,6 @@ import NProgress from 'nprogress' // 引入一份进度条插件
 import 'nprogress/nprogress.css' // 引入进度条样式
 const whiteList = ['/login', '/404'] // 定义白名单  所有不受权限控制的页面
 import Layout from '@/layout'
-import { getUserRouters } from '@/api/permisson'
-import { getStorage, saveStorage, getToken, getUserInfoFromCookie } from './utils/auth'
 // 定义一个动态路由
 let asyncRouter
 // 路由的前置守卫
@@ -22,7 +20,7 @@ router.beforeEach(async(to, from, next) => {
       // 判断vuex里的 userInfo 是否有 id 信息，如果有 那么说明有数据，不调用action里的获取用户接口
       // 如果没有id 那么说明 userinfo 里面是空的 那么就要调用action里的接口获取信息并且存到vuex的state的userinfo里
       if (!store.getters.id) {
-        console.log('没有id')
+        // console.log('没有id')
         // 如果没有id这个值 才会调用 vuex的获取资料的action
         // alert('没用id')
         await store.dispatch('user/getUserInfo')
@@ -30,13 +28,13 @@ router.beforeEach(async(to, from, next) => {
         // 为什么要写await 因为我们想获取完资料再去放行
       }
       if (store.getters.routes.length) {
-        console.log(store.getters.routes)
+        // console.log(store.getters.routes)
         // router.addRoutes(store.getters.routes)
-        console.log('有router')
+        // console.log('有router')
         next()
       } else {
         // alert('有id')
-        console.log('没用router动态添加')
+        // console.log('没用router动态添加')
         // 把后台拿到的route 和 静态的route 进行合并后，再去拿store的 routes 这时候是 合并好的
         await store.dispatch('permission/generateRoutes', store.getters.userRouters)
         // 获取本地存储里的后端获取到的路由信息
@@ -51,7 +49,7 @@ router.beforeEach(async(to, from, next) => {
         }])
         // 这里为了能显示出路由菜单
         router.options.routes = store.getters.routes
-        console.log(asyncRouter)
+        // console.log(asyncRouter)
         next({ ...to, replace: true })
       }
       // next()

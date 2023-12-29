@@ -1,5 +1,4 @@
 import Vue from 'vue'
-
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 import Component from '@/components'
 import ElementUI from 'element-ui'
@@ -7,7 +6,11 @@ import 'element-ui/lib/theme-chalk/index.css'
 import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 import checkPermission from './mixin/checkPermission'
 import '@/styles/index.scss' // global css
-
+import 'bpmn-js/dist/assets/diagram-js.css'
+import 'bpmn-js/dist/assets/bpmn-font/css/bpmn.css'
+import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css'
+import 'bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css'
+import 'bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css'
 import App from './App'
 import store from './store'
 import router from './router'

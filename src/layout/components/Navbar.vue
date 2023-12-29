@@ -5,7 +5,7 @@
       HR后台管理
       <span class="breadBtn">学习版</span>
     </div>
-    <!-- <breadcrumb class="breadcrumb-container" /> -->
+    <breadcrumb class="breadcrumb-container" />
 
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
@@ -74,7 +74,7 @@ export default {
   height: 50px;
   overflow: hidden;
   position: relative;
-  background: -webkit-linear-gradient(bottom, #5ed5bf, #678fec);
+  background: -webkit-linear-gradient(bottom, #0f98ed, #678fec);
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
   .app-breadcrumb {
   display: inline-block;

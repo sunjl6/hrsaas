@@ -82,7 +82,6 @@ export default {
     confirmBtn() {
       this.$refs.updateUser.validate((isok) => {
         if (isok) {
-          alert(123)
           this.$confirm('确认提交修改密码, 是否继续?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',

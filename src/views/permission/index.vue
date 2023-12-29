@@ -131,7 +131,7 @@
 </template>
 
 <script>
-import { setCurrentTab, getCurrentTab } from '@/utils/auth'
+// import { setCurrentTab, getCurrentTab } from '@/utils/auth'
 import { menuList, pageResource, delMenu, delResource } from '@/api/permisson'
 import addMenuPermissionDialog from './components/add-menuPermission.vue'
 import editMenuPermissionDialog from './components/edit-menuPermission.vue'
