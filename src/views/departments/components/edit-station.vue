@@ -1,6 +1,6 @@
 <template>
   <el-dialog title="修改岗位信息" :visible="isShowEditDialog">
-    <el-form ref="stationForm" :model="formData" :rules="rules">
+    <el-form ref="stationForm" :model="formData" :rules="rules" label-width="80px">
       <el-form-item label="父节点ID" prop="parentId">
         <el-input v-model="formData.parentId" style="width: 80%" placeholder="" disabled />
       </el-form-item>
@@ -9,6 +9,16 @@
       </el-form-item>
       <el-form-item label="岗位名称" prop="name">
         <el-input v-model="formData.name" style="width: 80%" placeholder="" />
+      </el-form-item>
+      <el-form-item label="level" prop="level">
+        <el-select v-model="formData.level" placeholder="请选择level">
+          <el-option
+            v-for="item in levels"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="所属部门" prop="orgId">
         <el-select v-model="formData.orgId" placeholder="请选择">
@@ -58,6 +68,21 @@ export default {
   },
   data() {
     return {
+      // 职位的level 等级
+      levels: [{
+        value: '1',
+        label: '普通员工'
+      }, {
+        value: '2',
+        label: '主管'
+      }, {
+        value: '3',
+        label: '经理'
+      }, {
+        value: '4',
+        label: '总监'
+      }],
+      value: '',
       formData: {
         describe: null,
         name: null,

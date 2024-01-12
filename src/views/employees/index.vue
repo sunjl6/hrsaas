@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { getEmployeeListByPage, delUser } from '@/api/employees'
+import { getEmployeeListByPage, delUser, switchAccountStatus } from '@/api/employees'
 import { getAllDepts } from '@/api/departments'
 import addUser from './components/add-employee.vue'
 import { formatDate } from '@/filter/index'
@@ -98,7 +98,11 @@ export default {
         }
         return ret
       },
-      isOpenAddDialog: false
+      isOpenAddDialog: false,
+      switchUserStatusDTO: {
+        id: '',
+        status: true
+      } // 传给后台修改用户status的 dto
 
     }
   },
@@ -217,7 +221,10 @@ export default {
       this.getUserListByPage()
     },
     // 页面开启和禁用员工按钮方法
-    changeUserStatus() {
+    async changeUserStatus(row) {
+      this.switchUserStatusDTO.id = row.id
+      this.switchUserStatusDTO.status = row.status
+      await switchAccountStatus(this.switchUserStatusDTO)
     }
   }
 }

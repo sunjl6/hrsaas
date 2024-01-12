@@ -57,9 +57,9 @@ export default {
 >
   <process id="process" processType="None" isClosed="false" isExecutable="true">
     <extensionElements>
-      <camunda:properties>
-        <camunda:property name="a" value="1" />
-      </camunda:properties>
+      <activiti:properties>
+        <activiti:property name="a" value="1" />
+      </activiti:properties>
     </extensionElements>
     <startEvent id="_2" name="start" />
   </process>

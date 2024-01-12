@@ -15,32 +15,47 @@
           :default-expand-all="false"
           :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
         >
-          <el-table-column
+          <!-- <el-table-column
             prop="id"
-            label="编号"
+            label="岗位编号"
             width="280"
-          />
+          /> -->
           <el-table-column
             prop="name"
             label="岗位名称"
-            width="180"
+            width="160"
           />
           <el-table-column
+            prop="orgId"
+            label="所属部门"
+            width="140"
+            :formatter="formatOrg"
+            align="center"
+          />
+          <!-- <el-table-column
             prop="status"
             label="状态"
-            width="180"
+            width="100"
             :formatter="formatIsEnable"
+          /> -->
+          <el-table-column
+            prop="level"
+            label="类型"
+            width="80"
+            :formatter="formatLevel"
+            align="center"
           />
           <el-table-column
             prop="describe"
             label="描述"
-            width="180"
+            width="280"
+            align="center"
           />
           <el-table-column
             label="操作"
           >
             <template slot-scope="scope">
-              <el-button type="primary" size="mini" icon="el-icon-plus" @click="addBtn(scope.row)">新增下属岗位</el-button>
+              <el-button type="primary" size="mini" icon="el-icon-plus" @click="addBtn(scope.row)">新增子岗位</el-button>
               <el-button type="primary" size="mini" icon="el-icon-edit" @click="editBtn(scope.row)">修改</el-button>
               <el-button type="danger" size="mini" icon="el-icon-delete" @click="delBtn(scope.row)">删除</el-button>
             </template>
@@ -67,6 +82,26 @@ export default {
   },
   data() {
     return {
+      formatLevel: function(row, colunm, cellValue) {
+        let str = ''
+        switch (row.level) {
+          case '1':
+            str = '员工'
+            break
+          case '2':
+            str = '主管'
+            break
+          case '3':
+            str = '经理'
+            break
+          case '4':
+            str = '总监'
+            break
+          default:
+            str = '其他'
+        }
+        return str
+      },
       formatIsEnable: function(row, colunm, cellValue) {
         if (row.status) {
           return '已启用'
@@ -87,6 +122,15 @@ export default {
     this.treeList()
   },
   methods: {
+    formatOrg: function(row, colunm, cellValue) {
+      // newarr.filter(item => item.num===2 )
+      const res = this.orgList.find(item => {
+        return item.id === row.orgId
+      })
+      // console.log(res[0].name)
+      // console.log(res.name)
+      return res.name
+    },
     // 打开编辑岗位
     editBtn(row) {
       console.log(row.id)

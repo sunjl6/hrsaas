@@ -40,10 +40,10 @@ export default {
     }
   },
   methods: {
-    addRole() {
-      insertRole(this.formData)
-      this.$emit('addRoleSuccess')
+    async addRole() {
+      await insertRole(this.formData)
       this.$message.success('添加角色成功')
+      this.$emit('addRoleSuccess')
     },
     close() {
       this.$emit('closeAddRoleDialog')

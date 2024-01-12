@@ -53,6 +53,7 @@ service.interceptors.response.use(
       return Promise.reject(new Error(msg))
     }
   }, error => {
+    // alert('123')
     Message.error(error)
     return Promise.reject(error)
   }

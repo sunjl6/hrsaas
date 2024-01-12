@@ -3,7 +3,7 @@
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
     <div class="app-breadcrumb">
       HR后台管理
-      <span class="breadBtn">学习版</span>
+      <span class="breadBtn">V1.0</span>
     </div>
     <breadcrumb class="breadcrumb-container" />
 

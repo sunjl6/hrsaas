@@ -64,3 +64,11 @@ export function getUserDetailById(id, data) {
   })
 }
 
+// 开启关闭用户状态
+export function switchAccountStatus(data) {
+  return request({
+    url: '/authority/user/switchAccountStatus',
+    method: 'PUT',
+    data
+  })
+}

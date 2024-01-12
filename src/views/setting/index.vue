@@ -43,12 +43,12 @@
                 align="center"
                 :formatter="formatReadonly"
               />
-              <el-table-column
+              <!-- <el-table-column
                 label="角色所属部门"
                 width="120"
                 prop="status"
                 align="center"
-              />
+              /> -->
               <el-table-column
                 label="功能描述"
                 prop="describe"
@@ -261,8 +261,8 @@ export default {
     },
     // 添加角色添加成功后通知父组件关闭对话
     addRoleSuccess() {
-      this.isOpenAddDialog = false
       this.getRoleList()
+      this.isOpenAddDialog = false
     },
     // 添加角色的子组件通知父组件关闭对话框
     closeAddRoleDialog() {

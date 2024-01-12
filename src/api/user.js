@@ -28,3 +28,10 @@ export function logout() {
   return request({
   })
 }
+// 获取所有用户信息
+export function getAllUser() {
+  return request({
+    url: '/authority/user/AllUserList',
+    method: 'GET'
+  })
+}

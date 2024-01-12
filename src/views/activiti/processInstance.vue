@@ -1,7 +1,10 @@
 <template>
   <div class="dashboard-container">
     <div class="app-container">
-      <h3>流程实例列表</h3>
+      <el-card>
+        <h3>流程实例列表</h3>
+      </el-card>
+
       <el-card>
         <el-table
           :data="tableData"
@@ -12,7 +15,7 @@
         >
           <el-table-column
             prop="processInstatnceId"
-            label="processInstatnceId"
+            label="流程实例编号"
             width="280"
           />
           <!-- <el-table-column
@@ -32,16 +35,17 @@
             width="180"
           /> -->
           <el-table-column
+            prop="starInstatncetUser"
+            label="流程发起人"
+            width="120"
+            align="center"
+          />
+          <el-table-column
             prop="processDefinitionVersion"
             label="version"
             width="80 "
             align="center"
           />
-          <!-- <el-table-column
-            prop="processVariables"
-            label="流程变量参数"
-            width="180"
-          /> -->
           <el-table-column
             prop="suspended"
             label="是否挂起"
@@ -55,12 +59,13 @@
           </el-table-column>
           <el-table-column
             prop="ended"
-            label="是否已经结束"
+            label="是否结束"
             :formatter="formatIsFinished"
             align="center"
           />
           <el-table-column
             label="操作"
+            align="center"
           >
             <template slot-scope="scope">
               <el-button type="danger" size="mini" icon="el-icon-delete" @click="delDeployment(scope.row)">删除</el-button>

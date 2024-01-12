@@ -185,6 +185,7 @@ export default {
     // 关闭编辑api权限对话框
     closeEditResourceDialog() {
       this.isOpenEditResourceDialog = false
+      this.pageResource()
       // this.getAllMenu()
       // setCurrentTab('api')
       // location.reload()
