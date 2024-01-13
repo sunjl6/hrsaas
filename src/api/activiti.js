@@ -144,3 +144,20 @@ export function modifyProcessNodeByDeploymentId(deploymentId, data) {
     data
   })
 }
+// 分页获取所有历史流程
+export function pageProcessHistory(params) {
+  return request({
+    url: '/activiti/history/pageProcessHistory', // 因为所有的接口都要跨域 表示所有的接口要带 /api
+    method: 'GET',
+    params
+  })
+}
+
+// 分页获取所有历史任务
+export function pageTaskHistory(params) {
+  return request({
+    url: '/activiti/history/pageTaskHistory', // 因为所有的接口都要跨域 表示所有的接口要带 /api
+    method: 'GET',
+    params
+  })
+}
