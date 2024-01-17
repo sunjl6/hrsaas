@@ -68,6 +68,7 @@
             align="center"
           >
             <template slot-scope="scope">
+              <el-button type="primary" size="mini" icon="el-icon-view" @click="timeLine(scope.row)">查看进度</el-button>
               <el-button type="danger" size="mini" icon="el-icon-delete" @click="delDeployment(scope.row)">删除</el-button>
             </template></el-table-column>
         </el-table>
@@ -83,6 +84,8 @@
       </el-card>
       <!-- 引入删除的打开对话组件 -->
       <delprocessInstance :process-instatnce-id="processInstatnceId" :is-open-del-process-instance-dialog="isOpenDelProcessInstanceDialog" @closeDelProcessInstanceDialog="closeDelProcessInstanceDialog" />
+      <!-- 查看进度时间线组件 -->
+      <timeLine ref="timelineDialog" :is-open-time-line="isOpenTimeLine" @closeTimeLine="closeTimeLine" />
     </div>
   </div>
 </template>
@@ -90,12 +93,15 @@
 <script>
 import { getAllProcessInstanceByPage, suspendInstance, actInstance } from '@/api/activiti'
 import delprocessInstance from './components/del-processInstance.vue'
+import timeLine from './components/timeLine.vue'
 export default {
   components: {
-    delprocessInstance
+    delprocessInstance,
+    timeLine
   },
   data() {
     return {
+      isOpenTimeLine: false, // 控制打开timeline的开关
       processInstatnceId: null,
       isOpenDelProcessInstanceDialog: false, // 控制打开删除按钮的对话框
       formatIsFinished: function(row, colunm, cellValue) {
@@ -117,6 +123,17 @@ export default {
     this.processInstancePageList()
   },
   methods: {
+
+    // 关闭timeLine 事件
+
+    closeTimeLine() {
+      this.isOpenTimeLine = false
+    },
+    // 查看进度的按钮事件
+    timeLine(row) {
+      this.$refs.timelineDialog.getTimeLine(row.processInstatnceId)
+      this.isOpenTimeLine = true
+    },
     // 子组件通知父组件关闭对话框
     closeDelProcessInstanceDialog() {
       this.isOpenDelProcessInstanceDialog = false

@@ -57,7 +57,7 @@
                 :page-size="processPageInfo.size"
                 @prev-click="preClick"
                 @next-click="nextClick"
-                @current-change="currentPage()"
+                @current-change="currentPage"
               />
             </el-card>
           </el-tab-pane>
@@ -120,12 +120,12 @@
               </el-table>
               <el-pagination
                 layout="prev, pager, next"
-                :total="historyTaskTableData.total"
-                :current-page.sync="historyTaskTableData.page"
-                :page-size="historyTaskTableData.size"
-                @prev-click="preClick"
-                @next-click="nextClick"
-                @current-change="currentPage()"
+                :total="taskPageInfo.total"
+                :current-page.sync="taskPageInfo.page"
+                :page-size="taskPageInfo.size"
+                @prev-click="preClickTask"
+                @next-click="nextClickTask"
+                @current-change="currentPageTask"
               />
             </el-card>
           </el-tab-pane>
@@ -167,7 +167,8 @@ export default {
         page: this.taskPageInfo.page,
         size: this.taskPageInfo.size
       })
-      this.historyTaskTableData = res
+      this.historyTaskTableData = res.pagelist
+      this.taskPageInfo.total = +res.total
     },
     // 分页获取历史流程的方法
     async pageProcessInstance() {
@@ -175,7 +176,8 @@ export default {
         page: this.processPageInfo.page,
         size: this.processPageInfo.size
       })
-      this.historyProcessTableData = res
+      this.historyProcessTableData = res.pagelist
+      this.processPageInfo.total = +res.total
     },
     tableRowClassName({ row, rowIndex }) {
       if (rowIndex === 1) {
@@ -185,18 +187,33 @@ export default {
       }
       return ''
     },
+    // 历史任务的分页事件
+    preClickTask() {
+      this.taskPageInfo.page = this.taskPageInfo.page - 1
+    },
+    // 历史任务的分页事件
+    nextClickTask() {
+      this.taskPageInfo.page = this.taskPageInfo.page + 1
+    },
+    // 历史任务的分页事件
+    currentPageTask() {
+      this.pageTaskHistory()
+    },
+
     // 历史流程的分页事件
     preClick() {
-      this.taskPageInfo.page = this.taskPageInfo.page - 1
+      this.processPageInfo.page = this.processPageInfo.page - 1
     },
     // 历史流程的分页事件
     nextClick() {
-      this.taskPageInfo.page = this.taskPageInfo.page + 1
+      this.processPageInfo.page = this.processPageInfo.page + 1
     },
     // 历史流程的分页事件
     currentPage() {
       this.pageProcessInstance()
     },
+
+    // tab切换点击事件
     handleClick() {}
   }
 }

@@ -161,3 +161,11 @@ export function pageTaskHistory(params) {
     params
   })
 }
+
+// 获取流程进度节点的信息
+export function getTimeLine(processInstanceId) {
+  return request({
+    url: '/activiti/history/progressForElementUI?processInstanceId=' + processInstanceId, // 因为所有的接口都要跨域 表示所有的接口要带 /api
+    method: 'GET'
+  })
+}
